@@ -1,7 +1,7 @@
 # Generic syscall AE smoke-test package
 
 This test branch temporarily pins Edelweiss commit
-`141faf3dd59a4fdfd0a332ae7d22b2fe25c14ea9` from the draft `feature/edl-memory-backend` pull request.
+`8ee4e99ba0d99f1e3542e73a5a548062577b8b4a` from the draft `feature/edl-memory-backend` pull request.
 Both the embedded `example.d01` bootstrap and the `main.edl` example
 are rebuilt from that same Edelweiss revision.
 
@@ -16,7 +16,8 @@ Separately download **Edelweiss-ja** or **Edelweiss-cn** from the
 Edelweiss feature-branch run and install its `EDELW` folder to try
 `EBrew.edl` and `large-demo.edl`.
 
-**Caution:** No successful real-device test yet establishes that every
-EX-word firmware keeps syscall 0xAE selector 3's returned scratch span
-exclusive throughout EDL execution or native OS callbacks. This is
-an experimental test package, not a published stable release.
+**Caution:** A8500 firmware was found actively overwriting the buffer returned by
+syscall AE selector 3. The earlier test build is unsafe and has been
+superseded by this safe-fallback revision. The loader uses recognized
+firmware P1 arenas and caches ELF reads; real-device testing is still
+required before calling this issue fixed.
