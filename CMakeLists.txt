@@ -38,7 +38,7 @@ add_custom_command(OUTPUT "${ASSETS}/ebrew_assets.h" "${ASSETS}/wallpaper.c"
   DEPENDS "${edelweiss_SOURCE_DIR}/tools/generate_assets.py"
     "${edelweiss_SOURCE_DIR}/assets/CASIO_EX.bmp" VERBATIM)
 add_custom_target(example_assets DEPENDS "${ASSETS}/ebrew_assets.h" "${ASSETS}/wallpaper.c")
-add_edl(example_app src/main.c "${ASSETS}/wallpaper.c")
+add_gint_edl(example_app src/main.c "${ASSETS}/wallpaper.c")
 set_target_properties(example_app PROPERTIES OUTPUT_NAME main)
 target_include_directories(example_app PRIVATE "${ASSETS}")
 add_dependencies(example_app example_assets)

@@ -29,3 +29,25 @@ for locale in ("ja", "cn"):
         data = page.read_bytes()
         assert b"@APP" not in data and b"\r\n" in data
     print(locale, appid, "main.edl + current Edelweiss bootstrap: package passed")
+
+# Runtime imports must remain relocatable zero-valued ABS symbols. Kernel
+# startup must never be linked into a hosted application.
+u32 = lambda at: struct.unpack_from(">I", payload, at)[0]
+u16 = lambda at: struct.unpack_from(">H", payload, at)[0]
+section_base, section_count = u32(32), u16(48)
+imports, defined = set(), set()
+for i in range(section_count):
+    sec = section_base + i * 40
+    if u32(sec + 4) != 2:
+        continue
+    strings = section_base + u32(sec + 24) * 40
+    for at in range(u32(sec + 16), u32(sec + 16) + u32(sec + 20), 16):
+        name_at = u32(strings + 16) + u32(at)
+        name = payload[name_at:payload.index(b"\0", name_at)].decode()
+        if u16(at + 14) == 0xfff1 and u32(at + 4) == 0:
+            imports.add(name)
+        elif u16(at + 14):
+            defined.add(name)
+assert {"_pollevent", "_timer_configure", "_rtc_ticks", "_r61523_display"} <= imports
+assert not {"_start", "_exword_entry", "_gint_kernel_install", "_mmu_exword_prepare"} & defined
+print("Hosted gint imports verified; no second kernel/startup in main.edl")
