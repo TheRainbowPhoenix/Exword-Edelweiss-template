@@ -15,6 +15,20 @@ concurrency:
   group: example-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check C formatting
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install clang-format==21.1.8
+          mapfile -t sources < <(git ls-files '*.c' '*.h')
+          clang-format --dry-run --Werror "${sources[@]}"
   build:
     runs-on: ubuntu-latest
     container:
@@ -30,12 +44,6 @@ jobs:
         with:
           repository: TheRainbowPhoenix/exword-xd-a8500-TEST
           path: dependencies/metadata
-      - name: Check example formatting
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -m pip install --target /tmp/format-tools clang-format==21.1.8
-          /tmp/format-tools/clang_format/data/bin/clang-format --dry-run --Werror src/main.c
       - name: Install EX-word fxSDK
         shell: bash
         run: |
