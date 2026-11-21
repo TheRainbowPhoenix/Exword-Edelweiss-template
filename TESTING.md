@@ -1,7 +1,7 @@
 # Generic syscall AE smoke-test package
 
 This test branch temporarily pins Edelweiss commit
-`8ee4e99ba0d99f1e3542e73a5a548062577b8b4a` from the draft `feature/edl-memory-backend` pull request.
+`db9a86822724519548f88b0b11d8d97225fc22b5` from the draft `feature/edl-memory-backend` pull request.
 Both the embedded `example.d01` bootstrap and the `main.edl` example
 are rebuilt from that same Edelweiss revision.
 

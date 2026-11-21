@@ -5,7 +5,7 @@ if(NOT FXSDK_PLATFORM_LONG STREQUAL "exword")
 endif()
 
 # Hardware test branch: pin a corrected ELF loader; AE scratch is unsafe.
-set(EDELWEISS_REF "8ee4e99ba0d99f1e3542e73a5a548062577b8b4a" CACHE STRING "Upstream Edelweiss branch, tag or commit")
+set(EDELWEISS_REF "db9a86822724519548f88b0b11d8d97225fc22b5" CACHE STRING "Upstream Edelweiss branch, tag or commit")
 set(EXWORD_APP_ID "EXMPL" CACHE STRING "Five-character dictionary installation ID")
 set(EXWORD_MODULE "example" CACHE STRING "D01 filename without its extension")
 set(EXWORD_HEAP_SIZE "262144" CACHE STRING "Payload-local gint heap in bytes")
