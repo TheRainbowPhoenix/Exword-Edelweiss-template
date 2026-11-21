@@ -35,6 +35,8 @@ int main(void)
         key_event_t event = pollevent();
         if (event.type == KEYEV_DOWN && (event.key == KEY_EXIT || event.key == KEY_ACON))
             break;
+        if (event.type == KEYEV_DOWN && event.key == KEY_EXE)
+            exit(0);
         uint32_t now = rtc_ticks();
         if (!ready && now == last)
         {
@@ -56,7 +58,7 @@ int main(void)
         dprint(20, 200, C_BLACK, "Frame %u - %dx%d - heap check %u", frame, DWIDTH, DHEIGHT,
                scratch[255]);
         dtext(20, 224, C_BLACK, "dimage / dcircle / dprint / timer / malloc / sin");
-        dtext(20, 248, C_BLACK, "Left/right: move. EXIT: return to launcher.");
+        dtext(20, 248, C_BLACK, "Left/right: move. EXIT: return. EXE: exit(0).");
         dtext(20, 278, C_BLACK, "The wallpaper alone is 168,960 loaded bytes.");
         dupdate();
         frame++;
